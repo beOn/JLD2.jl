@@ -6,7 +6,7 @@ using Mmap
 
 export jldopen, @load,   @save
 
-using Contrib.Dates: Date, Day, Instant, UTInstant
+using Compat.Dates: Date, Day, Instant, UTInstant
 
 const OBJECT_HEADER_SIGNATURE = htol(0x5244484f) # "OHDR"
 
@@ -334,11 +334,11 @@ Base.setindex!(f::JLDFile, obj, name::AbstractString) = (f.root_group[name] = ob
 Base.haskey(f::JLDFile, name::AbstractString) = haskey(f.root_group, name)
 Base.isempty(f::JLDFile) = isempty(f.root_group)
 Base.keys(f::JLDFile) = filter!(x->x != "_types", keys(f.root_group))
-Base.get(default::Function, f::Union{JLDFile, Group}, name::AbstractString) = 
+Base.get(default::Function, f::Union{JLDFile, Group}, name::AbstractString) =
     haskey(f, name) ? f[name] : default()
-Base.get(f::Union{JLDFile, Group}, name::AbstractString, default) = 
+Base.get(f::Union{JLDFile, Group}, name::AbstractString, default) =
     haskey(f, name) ? f[name] : default
-Base.get!(f::Union{JLDFile, Group}, name::AbstractString, default) = 
+Base.get!(f::Union{JLDFile, Group}, name::AbstractString, default) =
     get!(() -> default, f, name)
 function Base.get!(default::Function, f::Union{JLDFile, Group}, name::AbstractString)
     if haskey(f, name)
