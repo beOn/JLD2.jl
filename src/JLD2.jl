@@ -6,6 +6,8 @@ using Mmap
 
 export jldopen, @load,   @save
 
+using Contrib.Dates: Date, Day, Instant, UTInstant
+
 const OBJECT_HEADER_SIGNATURE = htol(0x5244484f) # "OHDR"
 
 # Currently we specify that all offsets and lengths are 8 bytes
